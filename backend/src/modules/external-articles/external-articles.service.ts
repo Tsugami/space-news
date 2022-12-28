@@ -1,8 +1,8 @@
-import {
+import type {
   ExternalArticle,
   ExternalArticleService,
   GetAllExternalArticlesInput,
-} from '#/interfaces/external-articles.interface';
+} from './external-articles.interface';
 import axios from 'axios';
 
 export class ExternalSpaceNewsArticleService implements ExternalArticleService {

@@ -19,7 +19,7 @@ for (const registry of registries) {
 
   container.afterResolution(
     registry.token,
-    (_t, result: any) => {
+    (_t, result: object) => {
       if ('init' in result && typeof result.init === 'function') {
         result.init();
       }

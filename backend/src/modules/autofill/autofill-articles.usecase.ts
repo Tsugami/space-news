@@ -1,5 +1,5 @@
-import type { ArticleService } from '#/interfaces/articles.interface';
-import type { ExternalArticleService } from '#/interfaces/external-articles.interface';
+import type { ArticleService } from '#/modules/articles/articles.interface';
+import type { ExternalArticleService } from '#/modules/external-articles/external-articles.interface';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
