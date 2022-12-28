@@ -5,7 +5,9 @@
       "decorators": true
     },
     "target": "es2020",
-    "paths": {},
+    "paths": {
+      "#/*": ["./*"]
+    },
     "baseUrl": "./src"
   },
 
