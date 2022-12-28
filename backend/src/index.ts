@@ -1,1 +1,4 @@
-console.log('hi!');
+import 'reflect-metadata';
+import { startApp } from './App';
+
+startApp();
