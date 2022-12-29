@@ -17,7 +17,7 @@ export interface ExternalArticle {
   }>;
 }
 
-export type GetAllExternalArticlesInput = { perPage: number };
+export type GetAllExternalArticlesInput = { perPage: number; max: number };
 
 export interface ExternalArticleService {
   findAll(input: GetAllExternalArticlesInput): AsyncGenerator<ExternalArticle[]>;

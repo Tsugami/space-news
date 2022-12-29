@@ -23,7 +23,7 @@ export class ExternalSpaceNewsArticleService implements ExternalArticleService {
 
     while (hasNext) {
       const res = await request(skip);
-      if (res.data.length < input.perPage) {
+      if (res.data.length < input.perPage || skip + res.data.length >= input.max) {
         hasNext = false;
       }
 
