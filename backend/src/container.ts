@@ -4,9 +4,13 @@ import { ArticleService } from './modules/articles/articles.repository';
 import { AutofillArticlesScheduledJob } from './modules/autofill/autofill-articles.cronjob';
 import { AutoFillArticlesUsecase } from './modules/autofill/autofill-articles.usecase';
 import { ExternalSpaceNewsArticleService } from './modules/external-articles/external-articles.service';
+import { PrismaService } from './modules/prisma/prisma.service';
 
 export const createContainer = () => {
   const container = new Container();
+
+  const prisma = new PrismaService();
+  container.bind(Scope.PRISMA_SERVICE).toDynamicValue(() => prisma);
 
   container
     .bind(Scope.EXTERNAL_ARTICLE_SERVICE)

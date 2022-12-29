@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Articles {
+  id Int @id @default(autoincrement())
+
+  external_id String @unique
+
+  featured Boolean
+  title    String
+  url      String
+  imageUrl String
+  newsSite String
+  summary  String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  launches Launches[]
+  events   Events[]
+
+  @@map("articles")
+}
+
+model Launches {
+  id          String @id @default(uuid())
+  external_id String @unique
+  provider    String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  articles Articles[]
+
+  @@map("launches")
+}
+
+model Events {
+  id          String @id @default(uuid())
+  external_id String @unique
+  provider    String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  articles Articles[]
+
+  @@map("events")
+}
