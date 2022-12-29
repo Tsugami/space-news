@@ -4,7 +4,9 @@ import type {
   GetAllExternalArticlesInput,
 } from './external-articles.interface';
 import axios from 'axios';
+import { injectable } from 'inversify';
 
+@injectable()
 export class ExternalSpaceNewsArticleService implements ExternalArticleService {
   async *findAll(input: GetAllExternalArticlesInput): AsyncGenerator<ExternalArticle[]> {
     const request = (skip: number) => {

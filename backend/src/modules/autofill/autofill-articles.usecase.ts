@@ -1,13 +1,14 @@
+import { Scope } from '#/constants';
 import type { ArticleService } from '#/modules/articles/articles.interface';
 import type { ExternalArticleService } from '#/modules/external-articles/external-articles.interface';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
 
 @injectable()
 export class AutoFillArticlesUsecase {
   constructor(
-    @inject('ArticleService')
+    @inject(Scope.ARTICLE_SERVICE)
     private readonly articleService: ArticleService,
-    @inject('ExternalArticleService')
+    @inject(Scope.EXTERNAL_ARTICLE_SERVICE)
     private readonly externalArticleService: ExternalArticleService,
   ) {}
 
