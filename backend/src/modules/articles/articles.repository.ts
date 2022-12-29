@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { injectable } from 'inversify';
 
 import { ArticleService as IArticleService } from '#/modules/articles/articles.interface';
 import { ExternalArticle } from '#/modules/external-articles/external-articles.interface';

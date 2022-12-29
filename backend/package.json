@@ -36,9 +36,9 @@
   "packageManager": "yarn@1.22.19",
   "dependencies": {
     "axios": "^1.2.1",
+    "inversify": "^6.0.1",
     "node-cron": "^3.0.2",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.7.0",
     "winston": "^3.8.2"
   }
 }
