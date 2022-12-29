@@ -4,7 +4,9 @@ import type {
   GetAllExternalArticlesInput,
 } from './external-articles.interface';
 import axios from 'axios';
+import { injectable } from 'inversify';
 
+@injectable()
 export class ExternalSpaceNewsArticleService implements ExternalArticleService {
   async *findAll(input: GetAllExternalArticlesInput): AsyncGenerator<ExternalArticle[]> {
     const request = (skip: number) => {
@@ -16,20 +18,17 @@ export class ExternalSpaceNewsArticleService implements ExternalArticleService {
       });
     };
 
-    const skip = 0;
+    let skip = 0;
     let hasNext = true;
 
     while (hasNext) {
-      try {
-        const res = await request(skip);
-        if (res.data.length < input.perPage) {
-          hasNext = false;
-        }
-
-        yield res.data;
-      } catch (er) {
-        console.log('err', er);
+      const res = await request(skip);
+      if (res.data.length < input.perPage) {
+        hasNext = false;
       }
+
+      yield res.data;
+      skip += input.perPage;
     }
   }
 }

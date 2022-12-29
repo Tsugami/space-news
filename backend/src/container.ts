@@ -1,31 +1,28 @@
-import { container } from 'tsyringe';
-import { ArticleService } from './modules/articles/articles.repository';
+import { Container } from 'inversify';
+import { Scope } from './constants';
+import { ArticleService } from './modules/articles/articles.service';
 import { AutofillArticlesScheduledJob } from './modules/autofill/autofill-articles.cronjob';
 import { AutoFillArticlesUsecase } from './modules/autofill/autofill-articles.usecase';
 import { ExternalSpaceNewsArticleService } from './modules/external-articles/external-articles.service';
-import { logger } from './modules/logging/logger';
+import { PrismaService } from './modules/prisma/prisma.service';
 
-const registries = [
-  { token: 'ExternalArticleService', useClass: ExternalSpaceNewsArticleService },
-  { token: 'ArticleService', useClass: ArticleService },
-  { token: 'AutoFillArticlesUsecase', useClass: AutoFillArticlesUsecase },
-  { token: 'AutofillArticlesScheduledJob', useClass: AutofillArticlesScheduledJob },
-];
+export const createContainer = () => {
+  const container = new Container();
 
-for (const registry of registries) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  container.register(registry.token, registry.useClass);
+  const prisma = new PrismaService();
 
-  container.afterResolution(
-    registry.token,
-    (_t, result: object) => {
-      if ('init' in result && typeof result.init === 'function') {
-        result.init();
-      }
+  container.bind(Scope.PRISMA_SERVICE).toDynamicValue(() => prisma);
 
-      logger.info(`[${registry.token}] registered!`);
-    },
-    { frequency: 'Once' },
-  );
-}
+  container
+    .bind(Scope.EXTERNAL_ARTICLE_SERVICE)
+    .to(ExternalSpaceNewsArticleService)
+    .inSingletonScope();
+
+  container.bind(Scope.ARTICLE_SERVICE).to(ArticleService).inSingletonScope();
+
+  container.bind(Scope.AUTOFILL_ARTICLE_USECASE).to(AutoFillArticlesUsecase).inSingletonScope();
+
+  container.bind(AutofillArticlesScheduledJob).toSelf();
+
+  return container;
+};

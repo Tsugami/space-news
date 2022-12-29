@@ -2,7 +2,8 @@ import cron from 'node-cron';
 
 import { AutoFillArticlesUsecase } from '#/modules/autofill/autofill-articles.usecase';
 import { logger } from '#/modules/logging/logger';
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'inversify';
+import { Scope } from '#/constants';
 
 @injectable()
 export class AutofillArticlesScheduledJob {
@@ -10,7 +11,7 @@ export class AutofillArticlesScheduledJob {
   #task!: cron.ScheduledTask;
 
   constructor(
-    @inject('AutoFillArticlesUsecase')
+    @inject(Scope.AUTOFILL_ARTICLE_USECASE)
     private readonly autofillArticlesUsecase: AutoFillArticlesUsecase,
   ) {}
 
