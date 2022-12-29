@@ -18,20 +18,17 @@ export class ExternalSpaceNewsArticleService implements ExternalArticleService {
       });
     };
 
-    const skip = 0;
+    let skip = 0;
     let hasNext = true;
 
     while (hasNext) {
-      try {
-        const res = await request(skip);
-        if (res.data.length < input.perPage) {
-          hasNext = false;
-        }
-
-        yield res.data;
-      } catch (er) {
-        console.log('err', er);
+      const res = await request(skip);
+      if (res.data.length < input.perPage) {
+        hasNext = false;
       }
+
+      yield res.data;
+      skip += input.perPage;
     }
   }
 }
