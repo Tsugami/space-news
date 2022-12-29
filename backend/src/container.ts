@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 import { Scope } from './constants';
-import { ArticleService } from './modules/articles/articles.repository';
+import { ArticleService } from './modules/articles/articles.service';
 import { AutofillArticlesScheduledJob } from './modules/autofill/autofill-articles.cronjob';
 import { AutoFillArticlesUsecase } from './modules/autofill/autofill-articles.usecase';
 import { ExternalSpaceNewsArticleService } from './modules/external-articles/external-articles.service';
