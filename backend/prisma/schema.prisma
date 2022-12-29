@@ -15,12 +15,13 @@ model Articles {
 
   external_id String @unique
 
-  featured Boolean
-  title    String
-  url      String
-  imageUrl String
-  newsSite String
-  summary  String
+  featured    Boolean
+  title       String
+  url         String
+  publishedAt String
+  imageUrl    String
+  newsSite    String
+  summary     String
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt

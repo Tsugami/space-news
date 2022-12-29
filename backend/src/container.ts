@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
 import { Scope } from './constants';
+import { ArticleController } from './modules/articles/articles.controller';
 import { ArticleService } from './modules/articles/articles.service';
 import { AutofillArticlesScheduledJob } from './modules/autofill/autofill-articles.cronjob';
 import { AutoFillArticlesUsecase } from './modules/autofill/autofill-articles.usecase';
@@ -22,6 +23,7 @@ export const createContainer = () => {
   container.bind(Scope.AUTOFILL_ARTICLE_USECASE).to(AutoFillArticlesUsecase).inSingletonScope();
 
   container.bind(AutofillArticlesScheduledJob).toSelf();
+  container.bind(ArticleController).toSelf();
 
   return container;
 };

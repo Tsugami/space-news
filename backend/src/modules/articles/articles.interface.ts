@@ -19,6 +19,21 @@ export interface Article {
   }>;
 }
 
+export interface ArticleListInput {
+  skip: number;
+  take: number;
+}
+
+interface PaginationMetadata {
+  total: number;
+}
+
+export interface ArticleListOutput {
+  results: Article[];
+  metadata: PaginationMetadata;
+}
+
 export interface ArticleService {
   createMany(articles: ExternalArticle[]): Promise<void>;
+  findMany(pagination: ArticleListInput): Promise<ArticleListOutput>;
 }
