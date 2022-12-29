@@ -30,7 +30,6 @@ const handleError: ErrorRequestHandler = (err, _req, res, next) => {
   return next();
 };
 
-type AnyPromiseFunction = (...params: unknown[]) => Promise<unknown>;
 type RequestFunction = (req: Request, res: Response) => Promise<unknown>;
 
 const wrapError =
