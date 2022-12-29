@@ -10,7 +10,6 @@ export const createContainer = () => {
   const container = new Container();
 
   const prisma = new PrismaService();
-
   container.bind(Scope.PRISMA_SERVICE).toDynamicValue(() => prisma);
 
   container
