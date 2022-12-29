@@ -4,3 +4,9 @@ export const Scope = {
   ARTICLE_SERVICE: 'ARTICLE_SERVICE',
   AUTOFILL_ARTICLE_USECASE: 'AUTOFILL_ARTICLE_USECASE',
 };
+
+export const StatusCode = {
+  OK: 200,
+  BAD_REQUEST: 400,
+  SERVER_INTERNAL_ERROR: 500,
+};

@@ -1,6 +1,10 @@
 import { inject, injectable } from 'inversify';
 
-import { ArticleService as IArticleService } from '#/modules/articles/articles.interface';
+import {
+  ArticleListInput,
+  ArticleListOutput,
+  ArticleService as IArticleService,
+} from '#/modules/articles/articles.interface';
 import { ExternalArticle } from '#/modules/external-articles/external-articles.interface';
 import { PrismaService } from '#/modules/prisma/prisma.service';
 import { Scope } from '#/constants';
@@ -8,6 +12,18 @@ import { Scope } from '#/constants';
 @injectable()
 export class ArticleService implements IArticleService {
   constructor(@inject(Scope.PRISMA_SERVICE) private readonly prismaService: PrismaService) {}
+
+  async findMany(pagination: ArticleListInput): Promise<ArticleListOutput> {
+    const results = await this.prismaService.articles.findMany({
+      skip: pagination.skip,
+      take: pagination.take,
+      include: { events: true, launches: true },
+    });
+
+    const total = await this.prismaService.articles.count();
+
+    return { results, metadata: { total } };
+  }
 
   async createMany(articles: ExternalArticle[]): Promise<void> {
     for (const externalArticle of articles) {
@@ -19,6 +35,7 @@ export class ArticleService implements IArticleService {
         summary: externalArticle.summary,
         title: externalArticle.title,
         url: externalArticle.url,
+        publishedAt: externalArticle.publishedAt,
         events: {
           connectOrCreate: externalArticle.events.map((event) => ({
             create: { external_id: String(event.id), provider: event.provider },
