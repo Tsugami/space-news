@@ -13,7 +13,7 @@ export class AutoFillArticlesUsecase {
   ) {}
 
   async registerAll() {
-    const options = { perPage: 100 };
+    const options = { perPage: 100, max: 1000 };
 
     for await (const articles of this.externalArticleService.findAll(options)) {
       await this.articleService.createMany(articles);
