@@ -77,4 +77,26 @@ describe('GET Articles', () => {
       },
     });
   });
+
+  it('should returns 400 when negative skip query is provided', async () => {
+    const response = await request(app).get('/articles?skip=-1').expect(400);
+
+    expect(response.body).toStrictEqual({
+      error: {
+        message: 'Number must be greater than or equal to 0',
+        path: ['skip'],
+      },
+    });
+  });
+
+  it('should returns 400 when negative take query is provided', async () => {
+    const response = await request(app).get('/articles?take=-1').expect(400);
+
+    expect(response.body).toStrictEqual({
+      error: {
+        message: 'Number must be greater than or equal to 1',
+        path: ['take'],
+      },
+    });
+  });
 });
