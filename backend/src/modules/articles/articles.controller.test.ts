@@ -99,4 +99,28 @@ describe('GET Articles', () => {
       },
     });
   });
+
+  it('should returns 200 when ASC query is provided', async () => {
+    const response = await request(app).get('/articles?sort=ASC').expect(200);
+
+    expect(response.body).toStrictEqual(mockResult);
+  });
+
+  it('should returns 200 when DESC query is provided', async () => {
+    const response = await request(app).get('/articles?sort=DESC').expect(200);
+
+    expect(response.body).toStrictEqual(mockResult);
+  });
+
+  it('should returns 200 when lowercase ASC query is provided', async () => {
+    const response = await request(app).get('/articles?sort=asc').expect(200);
+
+    expect(response.body).toStrictEqual(mockResult);
+  });
+
+  it('should returns 200 when lowercase DESC query is provided', async () => {
+    const response = await request(app).get('/articles?sort=desc').expect(200);
+
+    expect(response.body).toStrictEqual(mockResult);
+  });
 });

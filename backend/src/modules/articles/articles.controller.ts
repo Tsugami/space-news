@@ -15,6 +15,7 @@ export class ArticleController {
     skip: z.preprocess(Number, z.number().min(0)).default(0),
     take: z.preprocess(Number, z.number().max(100).min(1)).default(100),
     q: z.string().optional(),
+    sort: z.preprocess((v) => String(v).toLowerCase(), z.enum(['asc', 'desc'])).default('desc'),
   });
 
   async onGet(req: HttpRequest, res: HttpResponse) {

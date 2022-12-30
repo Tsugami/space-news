@@ -29,6 +29,7 @@ export class ArticleService implements IArticleService {
             ]
           : undefined,
       },
+      orderBy: { publishedAt: pagination.sort },
       include: { events: true, launches: true },
     });
 
