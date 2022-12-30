@@ -1,11 +1,18 @@
-name: CI
+name: Backend CI
  
 on:
   push:
     branches: ["master"]
+    paths:
+      - "./backend"
+      - "./.github"
+
   pull_request:
     types: [opened, synchronize]
- 
+    paths:
+      - "./backend"
+      - "./.github"
+  
 jobs:
   build:
       name: Build and Test
