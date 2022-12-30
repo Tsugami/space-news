@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
+    "migrate:dev": "prisma migrate dev",
     "build": "swc src --out-dir dist",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest watch --passWithNoTests",
