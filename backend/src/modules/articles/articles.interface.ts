@@ -8,7 +8,7 @@ export interface Article {
   imageUrl: string;
   newsSite: string;
   summary: string;
-  publishedAt: string;
+  publishedAt: Date;
   launches: Array<{
     id: string;
     provider: string;
