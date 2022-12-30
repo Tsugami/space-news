@@ -32,17 +32,13 @@ export interface ArticleListOutput {
 }
 
 import { useQuery } from "react-query";
-
+import axios from "axios";
 const API = "http://localhost:3001";
 
 export const useManyArticles = () => {
   return useQuery("articles", () => {
-    const searchParams = new URLSearchParams();
-
-    searchParams.append("take", "5");
-
-    return fetch(`${API}/articles?${searchParams.toString()}`).then(
-      (res) => res.json() as Promise<ArticleListOutput>,
-    );
+    return axios
+      .get<ArticleListOutput>(`${API}/articles`, { params: { take: 5 } })
+      .then((res) => res.data);
   });
 };

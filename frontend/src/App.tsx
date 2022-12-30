@@ -1,10 +1,11 @@
 import { IoIosRocket } from "react-icons/io";
 import { ArticleCard } from "./components/ArticleCard";
+import { Loading } from "./components/Loading";
 import { SearchForm } from "./components/SearchForm";
 import { useManyArticles } from "./hooks/useManyArticles";
 
 function App() {
-  const { data } = useManyArticles();
+  const { data, isLoading } = useManyArticles();
 
   return (
     <div className="container mx-auto px-6 mt-4">
@@ -20,14 +21,19 @@ function App() {
         </div>
       </section>
       <section className="flex flex-col justify-center items-center">
-        <div className="space-y-5 flex flex-col justify-center items-center">
-          {data?.results.map((article, idx) => (
-            <ArticleCard index={idx} key={article.id} article={article} />
-          ))}
-        </div>
-        <button className="border-2 rounded border-purple-400 text-purple-600 p-2 my-6 font-semibold hover:bg-purple-100">
-          Carregar mais
-        </button>
+        {isLoading && <Loading />}
+        {data && (
+          <>
+            <div className="space-y-5 flex flex-col justify-center items-center">
+              {data?.results.map((article, idx) => (
+                <ArticleCard index={idx} key={article.id} article={article} />
+              ))}
+            </div>
+            <button className="border-2 rounded border-purple-400 text-purple-600 p-2 my-6 font-semibold hover:bg-purple-100">
+              Carregar mais
+            </button>
+          </>
+        )}
       </section>
     </div>
   );
