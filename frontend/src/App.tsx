@@ -1,11 +1,13 @@
 import { IoIosRocket } from "react-icons/io";
 import { ArticleCard } from "./components/ArticleCard";
 import { Loading } from "./components/Loading";
+import { MoreArticleButton } from "./components/MoreArticleButton";
 import { SearchForm } from "./components/SearchForm";
 import { useManyArticles } from "./hooks/useManyArticles";
 
 function App() {
-  const { data, isLoading } = useManyArticles();
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useManyArticles();
 
   return (
     <div className="container mx-auto px-6 mt-4">
@@ -20,19 +22,28 @@ function App() {
           </h2>
         </div>
       </section>
-      <section className="flex flex-col justify-center items-center">
+      <section className="flex flex-col justify-center items-center my-6">
         {isLoading && <Loading />}
         {data && (
-          <>
-            <div className="space-y-5 flex flex-col justify-center items-center">
-              {data?.results.map((article, idx) => (
-                <ArticleCard index={idx} key={article.id} article={article} />
-              ))}
-            </div>
-            <button className="border-2 rounded border-purple-400 text-purple-600 p-2 my-6 font-semibold hover:bg-purple-100">
-              Carregar mais
-            </button>
-          </>
+          <div className="space-y-6 flex flex-col justify-center items-center">
+            {data?.pages.map((page, idx) => (
+              <div
+                className="space-y-6 flex flex-col justify-center items-center"
+                key={idx}>
+                {page?.results.map((article, articleIdx) => (
+                  <ArticleCard
+                    index={articleIdx + idx}
+                    key={article.id}
+                    article={article}
+                  />
+                ))}
+              </div>
+            ))}
+            <MoreArticleButton
+              onClick={() => fetchNextPage()}
+              isLoading={!hasNextPage || isFetchingNextPage}
+            />
+          </div>
         )}
       </section>
     </div>

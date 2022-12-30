@@ -31,14 +31,30 @@ export interface ArticleListOutput {
   metadata: PaginationMetadata;
 }
 
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import axios from "axios";
 const API = "http://localhost:3001";
 
 export const useManyArticles = () => {
-  return useQuery("articles", () => {
-    return axios
-      .get<ArticleListOutput>(`${API}/articles`, { params: { take: 5 } })
-      .then((res) => res.data);
-  });
+  return useInfiniteQuery(
+    "articles",
+    ({ pageParam }) => {
+      const page = pageParam ?? 1;
+      const itemsPerPage = 5;
+      const skip = (page - 1) * itemsPerPage;
+
+      return axios
+        .get<ArticleListOutput>(`${API}/articles`, {
+          params: { take: itemsPerPage, skip },
+        })
+        .then((res) => ({
+          results: res.data?.results ?? [],
+          metadata: { nextPageParam: page + 1, previousPageParam: page - 1 },
+        }));
+    },
+    {
+      getPreviousPageParam: (data) => data.metadata.previousPageParam,
+      getNextPageParam: (data) => data.metadata.nextPageParam,
+    },
+  );
 };
