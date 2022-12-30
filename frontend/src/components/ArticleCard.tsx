@@ -11,19 +11,17 @@ export const ArticleCard = ({ index }: CardProps) => {
     <div
       className={clsx("w-full max-w-2xl sm:flex  items-center", {
         "sm:flex-row-reverse": leftSide,
-      })}
-    >
+      })}>
       <img
         src="https://www.macau.rn.leg.br/images/galeria_em_artigos/image04_grd.png"
         alt="image"
-        className="w-full h-48 sm:h-52 sm:w-60 "
+        className="w-full h-48 sm:h-52 sm:w-60"
       />
       <div
         className={clsx({
           "sm:mr-5": leftSide,
           "sm:ml-5": !leftSide,
-        })}
-      >
+        })}>
         <h3 className="text-xl font-bold">Tenete ergo quod si servitus</h3>
         <div className="flex justify-between pr-2">
           <span className="text-sm">dd/mm/yyyy</span>

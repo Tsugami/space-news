@@ -25,7 +25,7 @@ export const SearchForm = ({ onSubmit }: SearchFormProps) => {
   const {
     handleSubmit,
     register,
-    formState: { errors, ...data },
+    formState: { errors },
     control,
   } = useForm<SearchFormInput>({
     resolver: zodResolver(schema),
@@ -34,8 +34,7 @@ export const SearchForm = ({ onSubmit }: SearchFormProps) => {
   return (
     <form
       className="md:flex flex-row justify-end md:space-x-2"
-      onSubmit={handleSubmit((data) => onSubmit(data))}
-    >
+      onSubmit={handleSubmit((data) => onSubmit(data))}>
       <SearchInput
         isInvalid={!!errors.search?.message}
         {...register("search")}
