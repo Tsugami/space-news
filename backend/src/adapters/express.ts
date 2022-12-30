@@ -5,8 +5,12 @@ import { ArticleController } from '#/modules/articles/articles.controller';
 import { HttpException } from '#/modules/common/http-exception';
 import { StatusCode } from '#/constants';
 
+import cors from 'cors';
+
 export const createExpressApp = (container: Container) => {
   const app = express();
+
+  app.use(cors());
 
   const articleController = container.get(ArticleController);
   app.get(
