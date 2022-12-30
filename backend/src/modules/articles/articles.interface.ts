@@ -23,6 +23,7 @@ export interface ArticleListInput {
   skip: number;
   take: number;
   q?: string;
+  sort: 'asc' | 'desc';
 }
 
 interface PaginationMetadata {
