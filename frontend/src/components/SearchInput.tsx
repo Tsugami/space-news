@@ -19,7 +19,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             {
               "border-red-500 focus:border-red-500 focus:ring-red-500 ":
                 isInvalid,
-            }
+            },
           )}
           aria-invalid={isInvalid}
           ref={ref}
@@ -28,11 +28,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         <button
           className="bg-[#506273] text-white px-3 py-3 md:p-1 absolute right-2.5 bottom-2.5 rounded-md focus:ring-4 focus:outline-none focus:ring-blue-300"
           type="submit"
-          {...buttonProps}
-        >
+          {...buttonProps}>
           <BiSearch />
         </button>
       </div>
     );
-  }
+  },
 );
