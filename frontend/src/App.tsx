@@ -1,18 +1,23 @@
+import { useState } from "react";
 import { IoIosRocket } from "react-icons/io";
 import { ArticleCard } from "./components/ArticleCard";
 import { Loading } from "./components/Loading";
 import { MoreArticleButton } from "./components/MoreArticleButton";
-import { SearchForm } from "./components/SearchForm";
+import { SearchForm, SearchFormInput } from "./components/SearchForm";
 import { useManyArticles } from "./hooks/useManyArticles";
 
 function App() {
+  const [filters, setFilters] = useState<Partial<SearchFormInput>>({
+    sort: "ASC",
+  });
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useManyArticles();
+    useManyArticles(filters);
 
   return (
     <div className="container mx-auto px-6 mt-4">
       <section className="mb-6 border-b pb-3 border-[#BEC7CE] md:border-b-2">
-        <SearchForm onSubmit={(data) => console.log(data)} />
+        <SearchForm onSubmit={(data) => setFilters(data)} />
         <div className="flex items-center flex-col">
           <div className="border flex justify-center items-center mt-6 rounded-full w-min p-6">
             <IoIosRocket size={70} color="#506273" />
