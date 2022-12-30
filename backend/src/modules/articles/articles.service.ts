@@ -17,6 +17,18 @@ export class ArticleService implements IArticleService {
     const results = await this.prismaService.articles.findMany({
       skip: pagination.skip,
       take: pagination.take,
+      where: {
+        AND: pagination.q
+          ? [
+              {
+                OR: [
+                  { title: { contains: pagination.q, mode: 'insensitive' } },
+                  { summary: { contains: pagination.q, mode: 'insensitive' } },
+                ],
+              },
+            ]
+          : undefined,
+      },
       include: { events: true, launches: true },
     });
 
