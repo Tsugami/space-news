@@ -12,7 +12,7 @@ const schema = z
   })
   .required();
 
-interface SearchFormInput {
+export interface SearchFormInput {
   search: string;
   sort: "ASC" | "DESC";
 }

@@ -33,11 +33,12 @@ export interface ArticleListOutput {
 
 import { useInfiniteQuery } from "react-query";
 import axios from "axios";
+import { SearchFormInput } from "../components/SearchForm";
 const API = "http://localhost:3001";
 
-export const useManyArticles = () => {
+export const useManyArticles = (filters: Partial<SearchFormInput>) => {
   return useInfiniteQuery(
-    "articles",
+    ["articles", filters],
     ({ pageParam }) => {
       const page = pageParam ?? 1;
       const itemsPerPage = 5;
@@ -45,7 +46,12 @@ export const useManyArticles = () => {
 
       return axios
         .get<ArticleListOutput>(`${API}/articles`, {
-          params: { take: itemsPerPage, skip },
+          params: {
+            take: itemsPerPage,
+            skip,
+            q: filters.search,
+            sort: filters.sort,
+          },
         })
         .then((res) => ({
           results: res.data?.results ?? [],
