@@ -22,7 +22,7 @@ export interface Article {
 export interface ArticleListInput {
   skip: number;
   take: number;
-  q: string;
+  q?: string;
 }
 
 interface PaginationMetadata {
