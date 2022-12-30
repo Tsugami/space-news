@@ -12,8 +12,8 @@ export class ArticleController {
   constructor(@inject(Scope.ARTICLE_SERVICE) private readonly articleService: ArticleService) {}
 
   #GET_SCHEMA = z.object({
-    skip: z.preprocess(Number, z.number()).default(0),
-    take: z.preprocess(Number, z.number().max(100)).default(100),
+    skip: z.preprocess(Number, z.number().min(0)).default(0),
+    take: z.preprocess(Number, z.number().max(100).min(1)).default(100),
   });
 
   async onGet(req: HttpRequest, res: HttpResponse) {
