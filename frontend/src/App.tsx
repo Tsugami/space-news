@@ -1,8 +1,11 @@
 import { IoIosRocket } from "react-icons/io";
 import { ArticleCard } from "./components/ArticleCard";
 import { SearchForm } from "./components/SearchForm";
+import { useManyArticles } from "./hooks/useManyArticles";
 
 function App() {
+  const { data } = useManyArticles();
+
   return (
     <div className="container mx-auto px-6 mt-4">
       <section className="mb-6 border-b pb-3 border-[#BEC7CE] md:border-b-2">
@@ -18,9 +21,9 @@ function App() {
       </section>
       <section className="flex flex-col justify-center items-center">
         <div className="space-y-5 flex flex-col justify-center items-center">
-          <ArticleCard index={0} />
-          <ArticleCard index={1} />
-          <ArticleCard index={2} />
+          {data?.results.map((article, idx) => (
+            <ArticleCard index={idx} key={article.id} article={article} />
+          ))}
         </div>
         <button className="border-2 rounded border-purple-400 text-purple-600 p-2 my-6 font-semibold hover:bg-purple-100">
           Carregar mais
